@@ -6,4 +6,4 @@ This is the final project for CSI3450 Fall '23
 We are the Mandelorians team.
 
 
-We are going to be doing the problem that involves TEC.
+We are going to be doing the problem that involves TEC. (Temporary Employment Corp)
