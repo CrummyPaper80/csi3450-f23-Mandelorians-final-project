@@ -1,0 +1,99 @@
+CREATE TABLE CANDIDATE (
+    candidate_id INTEGER PRIMARY KEY,
+    candidate_fname VARCHAR(20) NOT NULL,
+    candidate_lname VARCHAR(20),
+    candidate_phone CHAR(11),
+    candidate_email VARCHAR(50),
+    candidate_addr VARCHAR(100)
+);
+
+CREATE TABLE QUALIFICATION (
+    qual_code VARCHAR(15) PRIMARY KEY,
+    qual_desc VARCHAR(75) NOT NULL
+);
+
+CREATE TABLE CANDIDATE_QUALIFICATIONS (
+    candidate_id INTEGER,
+    qual_code VARCHAR(15),
+    PRIMARY KEY (candidate_id, qual_code),
+    FOREIGN KEY (candidate_id) REFERENCES CANDIDATE(candidate_id),
+    FOREIGN KEY (qual_code) REFERENCES QUALIFICATION(qual_code)
+);
+
+CREATE TABLE JOB_HISTORY (
+    job_history_id INTEGER PRIMARY KEY,
+    candidate_id INTEGER,
+    placement_id INTEGER,
+    start_dt DATE,
+    end_dt DATE,
+    total_hours INTEGER,
+    FOREIGN KEY (candidate_id) REFERENCES CANDIDATE(candidate_id),
+    FOREIGN KEY (placement_id) REFERENCES PLACEMENT(placement_id)
+);
+
+CREATE TABLE COMPANY (
+    company_id INTEGER PRIMARY KEY,
+    company_name VARCHAR(50) NOT NULL,
+    company_addr VARCHAR(100),
+    company_phone CHAR(11),
+    company_email VARCHAR(50)
+);
+
+CREATE TABLE OPENING (
+    opening_id INTEGER PRIMARY KEY,
+    company_id INTEGER,
+    num_of_positions INTEGER,
+    start_dt DATE,
+    end_dt DATE,
+    hourly_pay NUMBER(3,2),
+    FOREIGN KEY (company_id) REFERENCES COMPANY(company_id)
+);
+
+CREATE TABLE PLACEMENT (
+    placement_id INTEGER PRIMARY KEY,
+    opening_id INTEGER,
+    candidate_id INTEGER,
+    total_hours NUMBER(9,2),
+    FOREIGN KEY (opening_id) REFERENCES OPENING(opening_id),
+    FOREIGN KEY (candidate_id) REFERENCES CANDIDATE(candidate_id)
+);
+
+CREATE TABLE OPENING_QUALIFICATIONS (
+    opening_id INTEGER,
+    qual_code VARCHAR(15),
+    PRIMARY KEY (opening_id, qual_code),
+    FOREIGN KEY (opening_id) REFERENCES OPENING(opening_id),
+    FOREIGN KEY (qual_code) REFERENCES QUALIFICATION(qual_code)
+);
+
+CREATE TABLE COURSE (
+    course_id INTEGER PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL,
+    qual_code VARCHAR(15),
+    FOREIGN KEY (qual_code) REFERENCES QUALIFICATION(qual_code)
+);
+
+CREATE TABLE SESSION (
+    session_id INTEGER PRIMARY KEY,
+    course_id INTEGER,
+    start_time DATETIME,
+    end_time DATETIME,
+    session_fee NUMBER(9,2),
+    FOREIGN KEY (course_id) REFERENCES COURSE(course_id)
+);
+
+CREATE TABLE SESSION_CANDIDATES (
+    session_id INTEGER,
+    candidate_id INTEGER,
+    PRIMARY KEY (session_id, candidate_id),
+    FOREIGN KEY (session_id) REFERENCES SESSION(session_id),
+    FOREIGN KEY (candidate_id) REFERENCES CANDIDATE(candidate_id)
+);
+
+CREATE TABLE COURSE_PREREQS (
+    course_id INTEGER,
+    qual_code VARCHAR(15),
+    PRIMARY KEY (course_id, qual_code),
+    FOREIGN KEY (course_id) REFERENCES COURSE(course_id),
+    FOREIGN KEY (qual_code) REFERENCES QUALIFICATION(qual_code)
+);
