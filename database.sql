@@ -124,3 +124,8 @@ INSERT INTO QUALIFICATION (QUAL_CODE,QUAL_DESC) VALUES
 ('NW-CIS','Network Administrator, Cisco experience'),
 ('WD-CF','Web Developer, ColdFusion');
 
+-- COMPANY VALUES --
+INSERT INTO COMPANY VALUES
+(1, 'Google', 1800555555, 'google@gmail.com', '1600 Ampitheatre Parkway'), 
+(2, 'Amazon', 18009999999, 'amazon@aws.com', '410 Terry Ave N'), 
+(3, 'Microsoft', 18001111111, 'microsoft@outlook.com', 'NE 36th Street');
